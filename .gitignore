@@ -1,0 +1,12 @@
+*.un~
+*.swp
+Makefile
+*.o
+*.a
+*.log
+*.status
+*.dylib
+*.dylib.4
+*.pc
+rtaudio-config
+configure
