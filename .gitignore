@@ -10,3 +10,5 @@ Makefile
 *.pc
 rtaudio-config
 configure
+autom4te.cache
+doc/html
