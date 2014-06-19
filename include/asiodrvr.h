@@ -19,7 +19,7 @@
 class AsioDriver;
 extern AsioDriver *getDriver();		// for generic constructor 
 
-#if WINDOWS
+// #if WINDOWS
 #include <windows.h>
 #include "combase.h"
 #include "iasiodrv.h"
@@ -34,13 +34,13 @@ public:
 	// IUnknown
 	virtual HRESULT STDMETHODCALLTYPE NonDelegatingQueryInterface(REFIID riid,void **ppvObject);
 
-#else
+// #else
 
-class AsioDriver
-{
-public:
-	AsioDriver();
-#endif
+// class AsioDriver
+// {
+// public:
+// 	AsioDriver();
+// #endif
 	virtual ~AsioDriver();
 
 	virtual ASIOBool init(void* sysRef);

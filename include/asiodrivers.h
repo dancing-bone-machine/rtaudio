@@ -3,25 +3,25 @@
 
 #include "ginclude.h"
 
-#if MAC
-#include "CodeFragments.hpp"
+// #if MAC
+// #include "CodeFragments.hpp"
 
-class AsioDrivers : public CodeFragments
+// class AsioDrivers : public CodeFragments
 
-#elif WINDOWS
+// #elif WINDOWS
 #include <windows.h>
 #include "asiolist.h"
 
 class AsioDrivers : public AsioDriverList
 
-#elif SGI || BEOS
-#include "asiolist.h"
+// #elif SGI || BEOS
+// #include "asiolist.h"
 
-class AsioDrivers : public AsioDriverList
+// class AsioDrivers : public AsioDriverList
 
-#else
-#error implement me
-#endif
+// #else
+// #error implement me
+// #endif
 
 {
 public:

@@ -16,72 +16,72 @@ bool loadAsioDriver(char *name)
 
 //------------------------------------------------------------------------------------
 
-#if MAC
+// #if MAC
 
-bool resolveASIO(unsigned long aconnID);
+// bool resolveASIO(unsigned long aconnID);
 
-AsioDrivers::AsioDrivers() : CodeFragments("ASIO Drivers", 'AsDr', 'Asio')
-{
-	connID = -1;
-	curIndex = -1;
-}
+// AsioDrivers::AsioDrivers() : CodeFragments("ASIO Drivers", 'AsDr', 'Asio')
+// {
+// 	connID = -1;
+// 	curIndex = -1;
+// }
 
-AsioDrivers::~AsioDrivers()
-{
-	removeCurrentDriver();
-}
+// AsioDrivers::~AsioDrivers()
+// {
+// 	removeCurrentDriver();
+// }
 
-bool AsioDrivers::getCurrentDriverName(char *name)
-{
-	if(curIndex >= 0)
-		return getName(curIndex, name);
-	return false;
-}
+// bool AsioDrivers::getCurrentDriverName(char *name)
+// {
+// 	if(curIndex >= 0)
+// 		return getName(curIndex, name);
+// 	return false;
+// }
 
-long AsioDrivers::getDriverNames(char **names, long maxDrivers)
-{
-	for(long i = 0; i < getNumFragments() && i < maxDrivers; i++)
-		getName(i, names[i]);
-	return getNumFragments() < maxDrivers ? getNumFragments() : maxDrivers;
-}
+// long AsioDrivers::getDriverNames(char **names, long maxDrivers)
+// {
+// 	for(long i = 0; i < getNumFragments() && i < maxDrivers; i++)
+// 		getName(i, names[i]);
+// 	return getNumFragments() < maxDrivers ? getNumFragments() : maxDrivers;
+// }
 
-bool AsioDrivers::loadDriver(char *name)
-{
-	char dname[64];
-	unsigned long newID;
+// bool AsioDrivers::loadDriver(char *name)
+// {
+// 	char dname[64];
+// 	unsigned long newID;
 
-	for(long i = 0; i < getNumFragments(); i++)
-	{
-		if(getName(i, dname) && !strcmp(name, dname))
-		{
-			if(newInstance(i, &newID))
-			{
-				if(resolveASIO(newID))
-				{
-					if(connID != -1)
-						removeInstance(curIndex, connID);
-					curIndex = i;
-					connID = newID;
-					return true;
-				}
-			}
-			break;
-		}
-	}
-	return false;
-}
+// 	for(long i = 0; i < getNumFragments(); i++)
+// 	{
+// 		if(getName(i, dname) && !strcmp(name, dname))
+// 		{
+// 			if(newInstance(i, &newID))
+// 			{
+// 				if(resolveASIO(newID))
+// 				{
+// 					if(connID != -1)
+// 						removeInstance(curIndex, connID);
+// 					curIndex = i;
+// 					connID = newID;
+// 					return true;
+// 				}
+// 			}
+// 			break;
+// 		}
+// 	}
+// 	return false;
+// }
 
-void AsioDrivers::removeCurrentDriver()
-{
-	if(connID != -1)
-		removeInstance(curIndex, connID);
-	connID = -1;
-	curIndex = -1;
-}
+// void AsioDrivers::removeCurrentDriver()
+// {
+// 	if(connID != -1)
+// 		removeInstance(curIndex, connID);
+// 	connID = -1;
+// 	curIndex = -1;
+// }
 
-//------------------------------------------------------------------------------------
+// //------------------------------------------------------------------------------------
 
-#elif WINDOWS
+// #elif WINDOWS
 
 #include "iasiodrv.h"
 
@@ -148,39 +148,39 @@ void AsioDrivers::removeCurrentDriver()
 	curIndex = -1;
 }
 
-#elif SGI || BEOS
+// #elif SGI || BEOS
 
-#include "asiolist.h"
+// #include "asiolist.h"
 
-AsioDrivers::AsioDrivers() 
-	: AsioDriverList()
-{
-	curIndex = -1;
-}
+// AsioDrivers::AsioDrivers() 
+// 	: AsioDriverList()
+// {
+// 	curIndex = -1;
+// }
 
-AsioDrivers::~AsioDrivers()
-{
-}
+// AsioDrivers::~AsioDrivers()
+// {
+// }
 
-bool AsioDrivers::getCurrentDriverName(char *name)
-{
-	return false;
-}
+// bool AsioDrivers::getCurrentDriverName(char *name)
+// {
+// 	return false;
+// }
 
-long AsioDrivers::getDriverNames(char **names, long maxDrivers)
-{
-	return 0;
-}
+// long AsioDrivers::getDriverNames(char **names, long maxDrivers)
+// {
+// 	return 0;
+// }
 
-bool AsioDrivers::loadDriver(char *name)
-{
-	return false;
-}
+// bool AsioDrivers::loadDriver(char *name)
+// {
+// 	return false;
+// }
 
-void AsioDrivers::removeCurrentDriver()
-{
-}
+// void AsioDrivers::removeCurrentDriver()
+// {
+// }
 
-#else
-#error implement me
-#endif
+// #else
+// #error implement me
+// #endif

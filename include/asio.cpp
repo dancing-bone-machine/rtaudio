@@ -12,22 +12,22 @@
 #include "asiosys.h"		// platform definition
 #include "asio.h"
 
-#if MAC
-#include "asiodrvr.h"
+// #if MAC
+// #include "asiodrvr.h"
 
-#pragma export on
+// #pragma export on
 
-AsioDriver *theAsioDriver = 0;
+// AsioDriver *theAsioDriver = 0;
 
-extern "C"
-{
+// extern "C"
+// {
 
-long main()
-{
-	return 'ASIO';
-}
+// long main()
+// {
+// 	return 'ASIO';
+// }
 
-#elif WINDOWS
+// #elif WINDOWS
 
 #include "windows.h"
 #include "iasiodrv.h"
@@ -36,41 +36,41 @@ long main()
 IASIO *theAsioDriver = 0;
 extern AsioDrivers *asioDrivers;
 
-#elif SGI || SUN || BEOS || LINUX
-#include "asiodrvr.h"
-static AsioDriver *theAsioDriver = 0;
-#endif
+// #elif SGI || SUN || BEOS || LINUX
+// #include "asiodrvr.h"
+// static AsioDriver *theAsioDriver = 0;
+// #endif
 
 //-----------------------------------------------------------------------------------------------------
 ASIOError ASIOInit(ASIODriverInfo *info)
 {
-#if MAC || SGI || SUN || BEOS || LINUX
-	if(theAsioDriver)
-	{
-		delete theAsioDriver;
-		theAsioDriver = 0;
-	}		
-	info->driverVersion = 0;
-	strcpy(info->name, "No ASIO Driver");
-	theAsioDriver = getDriver();
-	if(!theAsioDriver)
-	{
-		strcpy(info->errorMessage, "Not enough memory for the ASIO driver!"); 
-		return ASE_NotPresent;
-	}
-	if(!theAsioDriver->init(info->sysRef))
-	{
-		theAsioDriver->getErrorMessage(info->errorMessage);
-		delete theAsioDriver;
-		theAsioDriver = 0;
-		return ASE_NotPresent;
-	}
-	strcpy(info->errorMessage, "No ASIO Driver Error");
-	theAsioDriver->getDriverName(info->name);
-	info->driverVersion = theAsioDriver->getDriverVersion();
-	return ASE_OK;
+// #if MAC || SGI || SUN || BEOS || LINUX
+// 	if(theAsioDriver)
+// 	{
+// 		delete theAsioDriver;
+// 		theAsioDriver = 0;
+// 	}		
+// 	info->driverVersion = 0;
+// 	strcpy(info->name, "No ASIO Driver");
+// 	theAsioDriver = getDriver();
+// 	if(!theAsioDriver)
+// 	{
+// 		strcpy(info->errorMessage, "Not enough memory for the ASIO driver!"); 
+// 		return ASE_NotPresent;
+// 	}
+// 	if(!theAsioDriver->init(info->sysRef))
+// 	{
+// 		theAsioDriver->getErrorMessage(info->errorMessage);
+// 		delete theAsioDriver;
+// 		theAsioDriver = 0;
+// 		return ASE_NotPresent;
+// 	}
+// 	strcpy(info->errorMessage, "No ASIO Driver Error");
+// 	theAsioDriver->getDriverName(info->name);
+// 	info->driverVersion = theAsioDriver->getDriverVersion();
+// 	return ASE_OK;
 
-#else
+// #else
 
 	info->driverVersion = 0;
 	strcpy(info->name, "No ASIO Driver");
@@ -90,18 +90,18 @@ ASIOError ASIOInit(ASIODriverInfo *info)
 	}
 	return ASE_NotPresent;
 
-#endif	// !MAC
+// #endif	// !MAC
 }
 
 ASIOError ASIOExit(void)
 {
 	if(theAsioDriver)
 	{
-#if WINDOWS
+// #if WINDOWS
 		asioDrivers->removeCurrentDriver();
-#else
-		delete theAsioDriver;
-#endif
+// #else
+// 		delete theAsioDriver;
+// #endif
 	}		
 	theAsioDriver = 0;
 	return ASE_OK;
@@ -249,9 +249,9 @@ ASIOError ASIOOutputReady(void)
 	return theAsioDriver->outputReady();
 }
 
-#if MAC
-}	// extern "C"
-#pragma export off
-#endif
+// #if MAC
+// }	// extern "C"
+// #pragma export off
+// #endif
 
 
